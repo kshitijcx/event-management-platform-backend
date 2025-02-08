@@ -22,7 +22,7 @@ const signup = async (req, res) => {
     await newUser.save();
 
     const token = generateToken(newUser);
-    res.status(201).json({ name, token, message: "User created successfully" });
+    res.status(201).json({ id:newUser._id,name, token, message: "User created successfully" });
   } catch (error) {
     res
       .status(500)
@@ -46,7 +46,7 @@ const signin = async (req, res) => {
     }
     const token = generateToken(user);
 
-    res.status(200).json({ name: user.name, token, message: "Signed in" });
+    res.status(200).json({ id:user._id, name:user.name, token, message: "Signed in" });
   } catch (error) {
     res.status(500).json({ message: "Error signing in", error: error.message });
   }
