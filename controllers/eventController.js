@@ -23,7 +23,7 @@ const getOne = async (req, res) => {
 const addEvent = async (req, res) => {
   try {
     const data = req.body;
-    console.log(data);
+    data["attendees"] = 0;
     const event = new Event(data);
     await event.save();
     res.status(201).json({ message: "Event Added" });
@@ -52,10 +52,12 @@ const deleteEvent = async (req, res) => {
   try {
     const { userId, postUserId } = req.body;
     const { id } = req.params;
+    console.log(userId,postUserId,id)
     if (userId !== postUserId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
     const deletedEvent = await Event.findByIdAndDelete(id);
+    console.log(deletedEvent)
     if (!deletedEvent)
       return res.status(404).json({ message: "Event not found" });
     res.json({ message: "Event deleted" });
